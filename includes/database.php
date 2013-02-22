@@ -17,7 +17,7 @@
       if (!$this->connection) {
         die("Database connection failed: " . mysql_error());
       } else {
-        $db_select = mysql_select_db('inventory_system', $this->connection);
+        $db_select = mysql_select_db('liveedit', $this->connection);
         if (!$db_select) {
           die("Database selection failed: " . mysql_error());
         }

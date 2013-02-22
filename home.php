@@ -1,33 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Inventory - Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link href="public/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet/less" type="text/css" href="public/css/style.less" />
-    <link href="public/css/bootstrap-responsive.css" rel="stylesheet">
 
-    <!-- less compiler -->
-    <script src="public/js/less.js" type="text/javascript"></script>
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="public/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="public/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="public/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="public/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="public/ico/favicon.png">
-  </head>
-
+<?php include_once('includes/header.php'); ?>
   <body>
 
     <div class="navbar navbar-inverse navbar-static-top">
@@ -94,7 +67,7 @@
               <div class="tab-content">
 
                 <div class="tab-pane active" id="inventory">
-                  <table class="table table-striped table-bordered">
+                  <table class="table table-striped table-bordered inventory-table">
                     <thead class="btn-success">
                       <th>Date</th>
                       <th>Item</th>
@@ -127,7 +100,7 @@
                   </table>
                 </div> <!-- end of tab-pane -->
 
-                <div class="tab-pane" id="additem">
+                <div class="tab-pane tabbable-with-border" id="additem">
                   <form action="#" method="post" class="form-horizontal add-item">
                     <div class="box-header">
                       <h5><i class="icon-plus-sign"></i><span class="break"></span> Add an Item to inventory</h5>
@@ -159,7 +132,7 @@
                   </form>
                 </div> <!-- end of tab-pane -->
 
-                <div class="tab-pane" id="addproduct">
+                <div class="tab-pane tabbable-with-border" id="addproduct">
                   <form action="#" method="post" class="form-horizontal add-item">
                     <div class="box-header">
                       <h5><i class="icon-plus-sign"></i><span class="break"></span> Add a Product to inventory</h5>
@@ -194,8 +167,38 @@
 
                   </form>
                 </div>
-                <div class="tab-pane" id="editprice">
-                  <p>Edit Price</p>
+                <div class="tab-pane tabbable-with-border" id="editprice">
+                  <div class="box-header">
+                    <h5><i class="icon-pencil"></i><span class="break"></span> Edit Price</h5>
+                  </div>
+
+                  <form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
+
+                    <div class="control-group">
+                      <label class="control-label" for="productName">Product Name</label>
+                      <div class="controls">
+                        <select name="productname" id="productName">
+                          <option value="dp_1">DP IP 7309</option>
+                          <option value="dp_2">DP IP 7310</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="price">Price</label>
+                      <div class="controls">
+                        <input type="text" id="price" placeholder="price" name="price">
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <div class="controls">
+                        <input type="submit" name="submit" value="Update" class="btn btn-primary">
+                      </div>
+                    </div>
+
+                  </form>
+                  
                 </div>
               </div>
             </div>
@@ -204,7 +207,6 @@
           
         </div><!--/span-->
       </div><!--/row-->
-
       <hr>
 
       <footer>
@@ -213,22 +215,5 @@
 
     </div><!--/.fluid-container-->
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="public/js/jquery.js"></script>
-    <script src="public/js/bootstrap-transition.js"></script>
-    <script src="public/js/bootstrap-alert.js"></script>
-    <script src="public/js/bootstrap-modal.js"></script>
-    <script src="public/js/bootstrap-dropdown.js"></script>
-    <script src="public/js/bootstrap-scrollspy.js"></script>
-    <script src="public/js/bootstrap-tab.js"></script>
-    <script src="public/js/bootstrap-tooltip.js"></script>
-    <script src="public/js/bootstrap-popover.js"></script>
-    <script src="public/js/bootstrap-button.js"></script>
-    <script src="public/js/bootstrap-collapse.js"></script>
-    <script src="public/js/bootstrap-carousel.js"></script>
-    <script src="public/js/bootstrap-typeahead.js"></script>
-
-  </body>
-</html>
+    
+<?php include_once('includes/footer.php'); ?>
