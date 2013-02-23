@@ -1,10 +1,10 @@
 <?php 
 
-  include_once("config.php");
+  require_once("config.php");
 
   class MySQLDatabase {
     private $connection;
-    public $last_query;
+    public  $last_query;
     private $magic_quotes_active;
 
     function __construct() {

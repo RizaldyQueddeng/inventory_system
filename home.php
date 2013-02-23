@@ -1,4 +1,11 @@
+<?php require_once('includes/functions.php'); ?>
+<?php require_once('includes/session.php'); ?>
+<?php 
+  if (!$session->is_logged_in()) {
+    redirect_to("index.php");
+  }
 
+ ?>
 
 <?php include_once('includes/header.php'); ?>
   <body>
@@ -18,7 +25,7 @@
                 <a href="#user" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Account Settings&nbsp;&nbsp;<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#"><i class="icon-cog"></i>&nbsp;&nbsp;Profile</a></li>
-                  <li><a href="#"><i class="icon-off"></i>&nbsp;&nbsp;Logout</a></li>
+                  <li><a href="logout.php"><i class="icon-off"></i>&nbsp;&nbsp;Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -210,7 +217,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; DPoint Technologies Asia <?php echo date("Y", time()); ?></p>
       </footer>
 
     </div><!--/.fluid-container-->
