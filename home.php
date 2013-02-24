@@ -48,7 +48,7 @@
               <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
-              <li><a href="#"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
+              <li><a href="users.php"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -214,6 +214,7 @@
           
         </div><!--/span-->
       </div><!--/row-->
+
       <hr>
 
       <footer>
@@ -221,6 +222,5 @@
       </footer>
 
     </div><!--/.fluid-container-->
-
     
 <?php include_once('includes/footer.php'); ?>

@@ -13,11 +13,11 @@
     }
 
     public function open_connection() {
-      $this->connection = mysql_connect('localhost', "root", "");
+      $this->connection = mysql_connect("localhost", "root", "");
       if (!$this->connection) {
         die("Database connection failed: " . mysql_error());
       } else {
-        $db_select = mysql_select_db('liveedit', $this->connection);
+        $db_select = mysql_select_db('inventory_system', $this->connection);
         if (!$db_select) {
           die("Database selection failed: " . mysql_error());
         }
@@ -61,7 +61,7 @@
       return mysql_insert_id($this->connection);
     }
 
-    public function affeted_rows() {
+    public function affected_rows() {
       return mysql_affected_rows($this->connection);
     }
 

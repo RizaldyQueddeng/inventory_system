@@ -11,7 +11,7 @@
   if (isset($_POST['submit'])) {
     
     $username = trim($_POST['username']);
-    $password = trim(md5($_POST['password']));
+    $password = trim($_POST['password']);
 
     if (!strlen($username) || !strlen($password)) {
       $message = "Both fields are required!";
@@ -80,5 +80,13 @@
 
     </div> <!-- /container -->
 
-<?php include_once('includes/footer.php') ?>
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+<?php include_once('includes/footer.php'); ?>
 <?php if(isset($database)) { $database->close_connection(); } ?>
