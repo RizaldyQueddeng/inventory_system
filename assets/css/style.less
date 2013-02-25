@@ -209,8 +209,14 @@
 
     #user_list {
       table.user-table {
-        tbody td:first-child {
-          width: 100px;
+        tbody {
+          td { text-align: center; }
+          td:first-child {
+            width: 80px;
+          }
+          td:last-child {
+            width: 100px;
+          }
         }
       }
     }

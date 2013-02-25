@@ -47,11 +47,11 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-tabs nav-stacked">
-              <li class="active"><a href="#"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
+              <li><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
               <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
-              <li><a href="users.php"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
+              <li class="active"><a href="users.php"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -78,11 +78,12 @@
                   <table class="table table-striped table-bordered user-table">
                     <thead class="btn-success">
                       <th>
-                        <input type="checkbox">&nbsp;&nbsp;&nbsp;Select All
+                        <input type="checkbox">&nbsp;&nbsp;Select All
                       </th>
                       <th>Username</th>
                       <th>Full Name</th>
                       <th>Gender</th>
+                      <th>Contact Number</th>
                       <th>Actions</th>
                     </thead>
                     <tbody>
@@ -98,7 +99,12 @@
                           echo "</td><td>"; 
                           echo $user->gender;
                           echo "</td><td>";
-                          echo "actions";
+                          echo $user->contact_number;
+                          echo "</td><td>";
+                          echo "<div class='btn-group'>";
+                          echo "<a href='#' class='btn'><i class='icon-pencil'></i></a>";
+                          echo "<a href='#' class='btn'><i class='icon-trash'></i></a>";
+                          echo "</div>";
                           echo "</td></tr>";
                         }
                         
@@ -108,25 +114,53 @@
                 </div> <!-- end of tab-pane -->
 
                 <div class="tab-pane tabbable-with-border" id="add_user">
-                  <form action="#" method="post" class="form-horizontal add-item">
+                  <form action="create_user.php" method="post" class="form-horizontal add-item">
                     <div class="box-header">
-                      <h5><i class="icon-plus-sign"></i><span class="break"></span> Add an Item to inventory</h5>
+                      <h5><i class="icon-plus-sign"></i><span class="break"></span> Add Admin User</h5>
                     </div>
 
                     <div class="control-group">
-                      <label for="productName" class="control-label">Product Name</label>
+                      <label for="username" class="control-label">Username</label>
                       <div class="controls">
-                        <select name="productname" id="productName">
-                          <option value="#">IP Camera</option>
-                          <option value="#">Analog Camera</option>
+                        <input type="text" name="username" id="username">
+                      </div>
+                    </div> <!-- end of control-group -->
+
+                    <div class="control-group">
+                      <label for="password" class="control-label">Password</label>
+                      <div class="controls">
+                        <input type="text" name="password" id="password">
+                      </div>
+                    </div> <!-- end of control-group -->
+
+                    <div class="control-group">
+                      <label for="first_name" class="control-label">First Name</label>
+                      <div class="controls">
+                        <input type="text" name="first_name" id="first_name">
+                      </div>
+                    </div> <!-- end of control-group -->
+
+                    <div class="control-group">
+                      <label for="last_name" class="control-label">Last Name</label>
+                      <div class="controls">
+                        <input type="text" name="last_name" id="last_name">
+                      </div>
+                    </div> <!-- end of control-group -->
+
+                    <div class="control-group">
+                      <label for="gender" class="control-label">Gender</label>
+                      <div class="controls">
+                        <select name="gender" class="input-small">
+                          <option value="male">Male</option>
+                          <option value="female">female</option>
                         </select>
                       </div>
                     </div> <!-- end of control-group -->
 
                     <div class="control-group">
-                      <label for="numberOfItem" class="control-label">Number of Item</label>
+                      <label for="contact_number" class="control-label">Contact Number</label>
                       <div class="controls">
-                        <input type="text" name="numberitem" id="numberOfItem">
+                        <input type="text" name="contact_number" id="contact_number">
                       </div>
                     </div> <!-- end of control-group -->
 

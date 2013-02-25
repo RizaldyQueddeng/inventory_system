@@ -11,7 +11,7 @@
   if (isset($_POST['submit'])) {
     
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+    $password = trim(md5($_POST['password']));
 
     if (!strlen($username) || !strlen($password)) {
       $message = "Both fields are required!";

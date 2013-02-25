@@ -5,8 +5,8 @@
 
 	class User extends DatabaseObject {
 
-    protected static $table_name = "users";
-    protected static $db_fields = array('id', 'username', 'password', 'first_name', 'last_name', 'gender');
+    protected static $table_name = "user";
+    protected static $db_fields = array('id', 'username', 'password', 'first_name', 'last_name', 'gender', 'contact_number');
 
     public $id;
     public $username;
@@ -14,6 +14,7 @@
     public $first_name;
     public $last_name;
     public $gender;
+    public $contact_number;
 		
 		public function full_name() {
       if (isset($this->first_name) && isset($this->last_name)) {
