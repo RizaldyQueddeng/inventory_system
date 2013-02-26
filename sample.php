@@ -4,6 +4,8 @@
   require_once('includes/database.php');
   require_once('includes/databaseobject.php');
   require_once('includes/user.php');
+  require_once('includes/inventory.php');
+
 
 
   $user = User::find_by_id(1);
@@ -31,5 +33,19 @@
   // $user = User::find_by_id(12);
   // $user->delete();
   // echo $user->username;
+
+  $product = new Inventory();
+  $product->product = "Dome Camera";
+  $product->quantity_left = 30;
+  $product->quantity_sold = 0;
+  $product->price = 20000;
+  $product->sales = 0;
+  $product->product_description = "Cctv camera for indoor security";
+
+  $product->units_purchase = $product->quantity_left;
+  $product->date = date("Y-m-d");
+  $product->save();
+
+
 
  ?>
