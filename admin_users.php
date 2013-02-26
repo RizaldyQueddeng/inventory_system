@@ -51,7 +51,7 @@
               <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
-              <li class="active"><a href="users.php"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
+              <li class="active"><a href="#"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -61,7 +61,7 @@
             <h1>Users</h1>
             <ul class="breadcrumb">
               <li><a href="home.php">Home</a> <span class="divider">/</span></li>
-              <li><a href="inventory.php">Users</a></li>
+              <li><a href="admin_users.php">Users</a></li>
             </ul>
           </div> <!-- end of content-header -->
 
@@ -78,7 +78,7 @@
                   <table class="table table-striped table-bordered user-table">
                     <thead class="btn-success">
                       <th>
-                        <input type="checkbox">&nbsp;&nbsp;Select All
+                        <input type="checkbox">&nbsp;&nbsp; All
                       </th>
                       <th>Username</th>
                       <th>Full Name</th>
