@@ -82,6 +82,12 @@
       return static::find_by_sql("SELECT * FROM ".static::$products_table_name);
     }
 
+    public static function find_if_exist($product_name) {
+      global $database;
+
+      return static::find_by_sql("SELECT * FROM " .static::$products_table_name. " WHERE product = '{$product_name}'");
+    }
+
     public function save() {
       // A new record won't have an id yet.
       return isset($this->id) ? $this->update() : $this->create();

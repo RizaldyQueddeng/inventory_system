@@ -29,23 +29,33 @@
             if (!is_numeric($quantity)) {
               $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp; Quantity must be an integer.";
             } else {
-              $product = new Inventory();
-              $product->product = $_POST['product_name'];
-              $product->quantity_left = $_POST['quantity'];
-              $product->quantity_sold = 0;
-              $product->price = $_POST['price'];
-              $product->sales = 0;
-              $product->product_description = $_POST['product_description'];
-              $product->product_date = date("Y-m-d");
 
-              $product->units_purchase = $product->quantity_left;
-              $product->purchase_date = date("Y-m-d");
-              $product->save();
+              // Check if record exist'
+              $product_for_name = Inventory::find_if_exist($product_name);
+              foreach ($product_for_name as $product) {
+                $product->product;
+              }
+              if ($product->product == $product_name) {
+                $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp;  Record Exist.";
+              } else {
+                $product = new Inventory();
+                $product->product = $_POST['product_name'];
+                $product->quantity_left = $_POST['quantity'];
+                $product->quantity_sold = 0;
+                $product->price = $_POST['price'];
+                $product->sales = 0;
+                $product->product_description = $_POST['product_description'];
+                $product->product_date = date("Y-m-d");
+
+                $product->units_purchase = $product->quantity_left;
+                $product->purchase_date = date("Y-m-d");
+                $product->save();
 
 
-              // for success message
-              $message = $product->message;
-              redirect_to('home.php');
+                // for success message
+                $message = $product->message;
+                redirect_to('home.php');
+              }
             }
           }
         }
