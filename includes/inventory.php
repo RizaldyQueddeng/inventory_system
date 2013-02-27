@@ -143,6 +143,51 @@
       // }
     }
 
+    public function add_item() {
+      global $database;
+      // Don't forget your SQL syntax and good habits:
+      // - INSERT INTO table (key, key) VALUES ('value','value')
+      // - single-quotes around all values
+      // - escape all values to prevent sql injection
+
+      // MYSQL Transactions
+      mysql_query("SET AUTOCOMMIT=0");
+      mysql_query("START TRANSACTION");
+
+      $attributes = $this->sanitized_attributes(self::$purchase_table_name);
+      $query1 = "INSERT INTO ". self::$products_table_name ." (";
+      $query1 .= join(", ", array_keys($attributes));
+      $query1 .= ") VALUES ('";
+      $query1 .= join("', '", array_values($attributes));
+      $query1 .= "')";
+      
+      if ($database->query($query1)) {
+        $this->id = $database->insert_id();
+        $this->product_id = $this->id;
+      } 
+
+      $attributes = $this->sanitized_attributes(self::$products_table_name);
+      $attribute_pairs = array();
+      foreach ($attributes as $key => $value) {
+        $attribute_pairs[] = "{$key}='{$value}'";
+      }
+      $query2 = "UPDATE ". self::$table_name ." SET ";
+      $query2 .= join(", ", $attribute_pairs); 
+      $query2 .= " WHERE id=". $database->escape_value($this->id);
+      $database->query($sql);
+      return ($database->affected_rows() == 1) ? true : false;
+
+      if ($database->query($query2)) {
+        $this->id = $database->insert_id();
+        mysql_query("COMMIT");
+        return $this->message = "Product added succesfully.";
+
+      } else {
+        mysql_query("ROLLBACK");
+      }
+
+    }
+
     public function update() {
       global $database;
       // Dont forget your SQL syntax and good habits
