@@ -2,6 +2,7 @@
   
   // Require Database class
   require_once('database.php');
+  require_once('databaseobject.php');
 
   class Inventory extends DatabaseObject {
 
@@ -10,7 +11,7 @@
     protected static $purchase_table_name = "purchase"; 
     protected static $sales_table_name = "sales"; 
 
-    protected static $products_fields = array('product', 'quantity_left', 'quantity_sold', 'price', 'sales', 'product_description', 'product_date');
+    protected static $products_fields = array('product_id','product', 'quantity_left', 'quantity_sold', 'price', 'sales', 'product_description', 'product_date');
     protected static $purchase_fields = array('product_id', 'units_purchase', 'purchase_date');
     protected static $sales_fields = array('product_id', 'quantity', 'sales_date', 'sales');
 
@@ -31,10 +32,9 @@
     public $purchase_date;
     public $quantity;
 
-    // for output return
-    public $message="";
 
 
+    // Method to check what table to use and will return attributes from the specific table
     protected function check_table_fields($tb_name) {
 
       if ($tb_name == self::$products_table_name) {
@@ -42,18 +42,18 @@
         return $attributes;
 
       } elseif ($tb_name == self::$purchase_table_name) {
-        return $this->attributes(self::$purchase_fields);
+        $attributes = $this->attributes(self::$purchase_fields);
         return $attributes;
 
       } elseif ($tb_name == self::$sales_table_name) {
-        return $this->attributes(self::$sales_fields);
+        $attributes = $this->attributes(self::$sales_fields);
         return $attributes;
 
       }
     }
 
+    // return an array of attribute keys and their values
     protected function attributes($tb_fields) {
-      // return an array of attribute keys and their values
 
       $attributes = array();
       foreach ($tb_fields as $field) {
@@ -64,6 +64,7 @@
       return $attributes;
     }
 
+    // Sanitize the values before submitting and returns clean attributes
     protected function sanitized_attributes($tb_fields) {
       global $database;
       $clean_attributes = array();
@@ -76,16 +77,39 @@
       return $clean_attributes;
     }
 
-    public static function find_all_inventory() {
-      global $database;
+    // Method to check what table to use and will return table name
+    protected static function check_table_name($tb_name) {
+      if ($tb_name == self::$products_table_name) {
+        return self::$products_table_name;
 
-      return static::find_by_sql("SELECT * FROM ".static::$products_table_name);
+      } elseif ($tb_name == self::$purchase_table_name) {
+        return self::$purchase_fields;
+
+      } elseif ($tb_name == self::$sales_table_name) {
+        return self::$sales_fields;
+      }
     }
 
-    public static function find_if_exist($product_name) {
+    // Selects all on products table
+    public static function find_all_inventory($table_name) {
       global $database;
 
-      return static::find_by_sql("SELECT * FROM " .static::$products_table_name. " WHERE product = '{$product_name}'");
+      return static::find_by_sql("SELECT * FROM " .$table_name);
+    }
+
+    // Find if record exist
+    public static function find_if_exist($product_name, $table_name) {
+      global $database;
+
+      return static::find_by_sql("SELECT * FROM " . self::check_table_name($table_name) . " WHERE product = '{$product_name}'");
+    }
+
+    // Find record by id
+    public static function find_by_product_id($id, $table_name) {
+      global $database;
+
+      $result_array = static::find_by_sql("SELECT * FROM " . $table_name . " WHERE product_id={$id}");
+      return !empty($result_array) ? array_shift($result_array) : false;
     }
 
     public function save() {
@@ -126,7 +150,7 @@
       if ($database->query($query2)) {
         $this->id = $database->insert_id();
         mysql_query("COMMIT");
-        return $this->message = "Product added succesfully.";
+        return $message = "Product added succesfully.";
 
       } else {
         mysql_query("ROLLBACK");
@@ -155,7 +179,7 @@
       mysql_query("START TRANSACTION");
 
       $attributes = $this->sanitized_attributes(self::$purchase_table_name);
-      $query1 = "INSERT INTO ". self::$products_table_name ." (";
+      $query1 = "INSERT INTO ". self::$purchase_table_name ." (";
       $query1 .= join(", ", array_keys($attributes));
       $query1 .= ") VALUES ('";
       $query1 .= join("', '", array_values($attributes));
@@ -163,24 +187,19 @@
       
       if ($database->query($query1)) {
         $this->id = $database->insert_id();
-        $this->product_id = $this->id;
       } 
 
+      $product = Inventory::find_by_product_id($this->product_id, self::$products_table_name);
+
       $attributes = $this->sanitized_attributes(self::$products_table_name);
-      $attribute_pairs = array();
-      foreach ($attributes as $key => $value) {
-        $attribute_pairs[] = "{$key}='{$value}'";
-      }
-      $query2 = "UPDATE ". self::$table_name ." SET ";
-      $query2 .= join(", ", $attribute_pairs); 
-      $query2 .= " WHERE id=". $database->escape_value($this->id);
-      $database->query($sql);
-      return ($database->affected_rows() == 1) ? true : false;
+      $query2 = "UPDATE ". self::$products_table_name ." SET ";
+      $query2 .= "quantity_left = " .$product->quantity_left. " + ".$this->units_purchase." "; 
+      $query2 .= "WHERE product_id=". $attributes['product_id'];
 
       if ($database->query($query2)) {
-        $this->id = $database->insert_id();
         mysql_query("COMMIT");
-        return $this->message = "Product added succesfully.";
+        $this->product_id = "";
+        return $message = "Add item to product run succesfully.";
 
       } else {
         mysql_query("ROLLBACK");

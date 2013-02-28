@@ -7,29 +7,12 @@
   }
 
   if (isset($_POST['submit'])) {
-      $product_id = $_POST['product_id'];
-      $units_purchase = $_POST['units_purchase'];
-
-      // Check for required field
-      if (!strlen($product_id) || !strlen($units_purchase)) {
-        $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp; All fields are required.";
-      } else {
-        // Check if is numeric
-        if (!is_numeric($units_purchase)) {
-          $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp; Units purchase must be integer.";
-        } else {
-          $product = new Inventory();
-          $product->product_id = $_POST['product_id'];
-          $product->units_purchase = $units_purchase;
-          $product->purchase_date = date("Y-m-d");
-          $message = $product->add_item();
-
-          $units_purchase = "";
-        }
-      }
+      
   } else {
-    $product_id = "";
-    $units_purchase = "";
+    $product_name = "";
+    $product_description = "";
+    $price = "";
+    $quantity = "";
   }
  ?>
 
@@ -70,7 +53,7 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-tabs nav-stacked">
-              <li class="active"><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
+              <li class="active"><a href="#"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
               <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
@@ -102,20 +85,21 @@
              ?>
 
             <ul class="nav nav-tabs">
-              <li><a href="home.php">Inventory</a></li>
+              <li class="active"><a href="home.php">Inventory</a></li>
               <li><a href="add_product.php">Add Product</a></li>
-              <li class="active"><a href="add_item.php">Add Items</a></li>
+              <li><a href="add_item.php">Add Items</a></li>
               <li><a href="edit_price.php">Edit Price</a></li>
             </ul>
 
             <div class="tabb">
-              <form action="add_item.php" method="post" class="form-horizontal add-item">
-                <div class="box-header">
-                  <h5><i class="icon-plus-sign"></i><span class="break"></span> Add an Item to inventory</h5>
-                </div>
+              <div class="box-header">
+                <h5><i class="icon-pencil"></i><span class="break"></span> Edit Price</h5>
+              </div>
+
+              <form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 
                 <div class="control-group">
-                  <label for="productName" class="control-label">Product Name</label>
+                  <label class="control-label" for="productName">Product Name</label>
                   <div class="controls">
                     <select name="product_id" id="productName">
                       <?php 
@@ -127,25 +111,27 @@
                       ?>
                     </select>
                   </div>
-                </div> <!-- end of control-group -->
+                </div>
 
                 <div class="control-group">
-                  <label for="numberOfItem" class="control-label">Units Purchase</label>
+                  <label class="control-label" for="price">Price</label>
                   <div class="controls">
-                    <input type="number" name="units_purchase" id="numberOfItem" value="<?php echo htmlentities($units_purchase); ?>">
+                    <input type="text" id="price" placeholder="price" name="price">
                   </div>
-                </div> <!-- end of control-group -->
+                </div>
 
                 <div class="control-group">
                   <div class="controls">
-                    <input type="submit" name="submit" class="btn btn-primary" value="Add">
+                    <input type="submit" name="submit" value="Update" class="btn btn-primary">
                   </div>
                 </div>
 
               </form>
-            </div> <!-- end of tab-pane -->
+              
+            </div> <!-- end of tab pane -->
 
           </div> <!-- end of row-fluid -->
+        
         </div><!-- span -->
       </div><!-- row -->
 

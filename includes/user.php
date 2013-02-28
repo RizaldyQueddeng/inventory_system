@@ -2,6 +2,7 @@
   
   // Require Database class
   require_once('database.php');
+  require_once('databaseobject.php');
 
 	class User extends DatabaseObject {
 

@@ -31,11 +31,8 @@
             } else {
 
               // Check if record exist'
-              $product_for_name = Inventory::find_if_exist($product_name);
-              foreach ($product_for_name as $product) {
-                $product->product;
-              }
-              if ($product->product == $product_name) {
+              $table_name = "products";
+              if (Inventory::find_if_exist($product_name, $table_name)) {
                 $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp;  Record Exist.";
               } else {
                 $product = new Inventory();
@@ -49,12 +46,13 @@
 
                 $product->units_purchase = $product->quantity_left;
                 $product->purchase_date = date("Y-m-d");
-                $product->save();
+                $message = $product->save();
 
+                $product_name = "";
+                $product_description = "";
+                $price = "";
+                $quantity = "";
 
-                // for success message
-                $message = $product->message;
-                redirect_to('add_product.php');
               }
             }
           }
@@ -106,7 +104,7 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-tabs nav-stacked">
-              <li class="active"><a href="#"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
+              <li class="active"><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
               <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
@@ -138,10 +136,10 @@
              ?>
 
             <ul class="nav nav-tabs">
-              <li><a href="inventory.php">Inventory</a></li>
-              <li class="active"><a href="#">Add Product</a></li>
+              <li><a href="home.php">Inventory</a></li>
+              <li class="active"><a href="add_product.php">Add Product</a></li>
               <li><a href="add_item.php">Add Items</a></li>
-              <li><a href="#">Edit Price</a></li>
+              <li><a href="edit_price.php">Edit Price</a></li>
             </ul>
 
            <div class="tabb">

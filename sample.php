@@ -34,18 +34,30 @@
   // $user->delete();
   // echo $user->username;
 
-  $product = new Inventory();
-  $product->product = "Dome Camera";
-  $product->quantity_left = 30;
-  $product->quantity_sold = 0;
-  $product->price = 20000;
-  $product->sales = 0;
-  $product->product_description = "Cctv camera for indoor security";
+  // $product = new Inventory();
+  // $product->product = "Dome Camera";
+  // $product->quantity_left = 30;
+  // $product->quantity_sold = 0;
+  // $product->price = 20000;
+  // $product->sales = 0;
+  // $product->product_description = "Cctv camera for indoor security";
 
-  $product->units_purchase = $product->quantity_left;
-  $product->date = date("Y-m-d");
-  $product->save();
+  // $product->units_purchase = $product->quantity_left;
+  // $product->date = date("Y-m-d");
+  // $product->save();
 
+  // $table_name = "products";
+  // $for_select_input = Inventory::find_all_inventory($table_name);
+  // foreach ($for_select_input as $field) {
+  //   echo $field->product_id ." ". $field->product . "<br />";
+  // }
+  
+  // echo "<br />";
+
+
+  if (isset($_POST{'submit'})) {
+    echo $_POST['product_id'];
+  }
 
 
  ?>

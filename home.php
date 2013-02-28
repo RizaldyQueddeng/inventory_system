@@ -44,7 +44,7 @@
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-tabs nav-stacked">
-              <li class="active"><a href="#"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
+              <li class="active"><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
               <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
@@ -76,10 +76,10 @@
              ?>
 
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#">Inventory</a></li>
+              <li class="active"><a href="home.php">Inventory</a></li>
               <li><a href="add_product.php">Add Product</a></li>
-              <li><a href="#">Add Items</a></li>
-              <li><a href="#">Edit Price</a></li>
+              <li><a href="add_item.php">Add Items</a></li>
+              <li><a href="edit_price.php">Edit Price</a></li>
             </ul>
 
             <table class="table table-striped table-bordered inventory-table">
@@ -94,7 +94,8 @@
               </thead>
               <tbody>
                 <?php 
-                  $item = Inventory::find_all_inventory();
+                  $table_name = "products";
+                  $item = Inventory::find_all_inventory($table_name);
                   foreach ($item as $field) {
                     echo "<tr><td>";
                     echo $field->product_date;

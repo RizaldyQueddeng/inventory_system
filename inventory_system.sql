@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2013 at 07:42 PM
+-- Generation Time: Feb 28, 2013 at 06:13 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -43,8 +43,10 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product`, `quantity_left`, `quantity_sold`, `price`, `sales`, `product_description`, `product_date`) VALUES
-(4, 'DVR Kit', 30, 0, 23086, 0, 'Complete Analog Camera kit. Includes DVR and wiring.', '2013-02-26'),
-(3, 'A-180B-SE', 50, 0, 4699, 0, 'High Resolution, Weatherproof and High Night Sensitivity. Perfect for outdoors and public areas', '2013-02-26');
+(1, 'DVR Kit', 10, 0, 23086, 0, 'Complete Analog Camera kit. Includes DVR and wiring.', '2013-02-28'),
+(2, 'Vedrus Package', 30, 0, 52363, 0, 'Video footages are captured in zoom default with 2 Mega Pixel resolution. It enables fast efficient analysis of recorded data in predefined picture areas', '2013-02-28'),
+(3, 'Egarda Package', 50, 0, 57828, 0, 'Captures a wide range of area and it keeps eye on everything. The wide viewing angle of this IP camera captures everything it covers.', '2013-02-28'),
+(4, 'A-170D-SE', 40, 0, 4499, 0, 'The High Resolution Choice in a Metal Shell Perfect for outdoors and public areas.', '2013-02-28');
 
 -- --------------------------------------------------------
 
@@ -73,15 +75,20 @@ CREATE TABLE IF NOT EXISTS `purchase` (
   `units_purchase` int(11) NOT NULL,
   `purchase_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `purchase`
 --
 
 INSERT INTO `purchase` (`id`, `product_id`, `units_purchase`, `purchase_date`) VALUES
-(3, 3, 50, '2013-02-26'),
-(4, 4, 30, '2013-02-26');
+(1, 1, 10, '2013-02-28'),
+(2, 2, 20, '2013-02-28'),
+(3, 3, 30, '2013-02-28'),
+(4, 2, 10, '2013-02-28'),
+(5, 3, 20, '2013-02-28'),
+(6, 4, 10, '2013-02-28'),
+(7, 4, 30, '2013-02-28');
 
 -- --------------------------------------------------------
 
