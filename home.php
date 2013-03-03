@@ -45,7 +45,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-tabs nav-stacked">
               <li class="active"><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
-              <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
+              <li><a href="products.php"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
               <li><a href="admin_users.php"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
@@ -63,8 +63,11 @@
           </div> <!-- end of content-header -->
 
           <div class="row-fluid content-main">
-
+          
             <?php 
+              if (isset($_GET['message'])) {
+                $message = $_GET['message'];
+              }
               if (!empty($message)) {
                 $alert_message = "<div class='alert alert-error'><br>";
                 $alert_message .= "<button class='close' data-dismiss='alert'>&times;</button>";
@@ -79,11 +82,13 @@
               <li class="active"><a href="home.php">Inventory</a></li>
               <li><a href="add_product.php">Add Product</a></li>
               <li><a href="add_item.php">Add Items</a></li>
+              <li><a href="items_sold.php">Items Sold</a></li>
               <li><a href="edit_price.php">Edit Price</a></li>
             </ul>
 
-            <table class="table table-striped table-bordered inventory-table">
+            <table class="table table-striped table-bordered table-hover inventory-table">
               <thead class="btn-success">
+                <th>ID</th>
                 <th>Date</th>
                 <th>Item</th>
                 <th>Quantity left</th>
@@ -98,6 +103,8 @@
                   $item = Inventory::find_all_inventory($table_name);
                   foreach ($item as $field) {
                     echo "<tr><td>";
+                    echo $field->product_id;
+                    echo "</td><td>";
                     echo $field->product_date;
                     echo "</td><td>";
                     echo $field->product;
@@ -108,9 +115,9 @@
                     echo "</td><td>";
                     echo formatMoney($field->price, true);
                     echo "</td><td>";
-                    echo $field->sales;
+                    echo formatMoney($field->sales, true);
                     echo "</td><td>";
-                    echo "<a href='#' class='btn'><i class='icon-trash'></i></a>";
+                    echo "<a href='delete.php?id=". $field->product_id ."' class='btn tooltip_dialog' data-toggle='tooltip' data-placement='left' title='Delete Record' onclick='return confirmAction()'><i class='icon-trash'></i></a>";
                     echo "</td></tr>";
                   }
                   
@@ -122,13 +129,7 @@
         
         </div><!-- span -->
       </div><!-- row -->
-
-      <hr>
-
-      <footer>
-        <p>&copy; DPoint Technologies Asia <?php echo date("Y", time()); ?></p>
-      </footer>
-
+      
     </div><!--/.fluid-container-->
     
 <?php include_once('includes/footer.php'); ?>

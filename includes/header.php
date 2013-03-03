@@ -11,6 +11,7 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet/less" type="text/css" href="assets/css/style.less" />
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
 
     <!-- less compiler -->
     <script src="assets/js/less.js" type="text/javascript"></script>

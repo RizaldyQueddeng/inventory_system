@@ -48,7 +48,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-tabs nav-stacked">
               <li><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
-              <li><a href="#"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
+              <li><a href="products.php"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
               <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
               <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
               <li class="active"><a href="#"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
@@ -181,12 +181,6 @@
           
         </div><!--/span-->
       </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <p>&copy; DPoint Technologies Asia <?php echo date("Y", time()); ?></p>
-      </footer>
 
     </div><!--/.fluid-container-->
     

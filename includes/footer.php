@@ -1,39 +1,35 @@
    
+    <footer class="footer">
+      <hr>
+      <div class="container-fluid">
+        <p>&copy; DPoint Technologies Asia <?php echo date("Y", time()); ?></p>
+      </div>
+    </footer>
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script>
-      $(function() {
-        $('a[data-toggle="tab"]').on('shown', function (e) {
-          //save the latest tab; use cookies if you like 'em better:
-          localStorage.setItem('lastTab', $(e.target).attr('id'));
-        });
-       
-        //go to the latest tab, if it exists:
-        var lastTab = localStorage.getItem('lastTab');
-        if (lastTab) {
-            $('#'+lastTab).tab('show');
-        }
+    <script src="assets/js/holder.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fancybox-1.3.4/fancybox/jquery.easing-1.4.pack.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fancybox-1.3.4/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+    <script type="text/javascript" language="javascript">
+      function confirmAction()
+      {
+        var confirmed = confirm("Are you sure? This will remove the record forever.");
+        return confirmed;
+      }
+
+      $(function(){
+        $('.tooltip_dialog').tooltip();
       });
 
-      $(function() {
-        $('a[data-toggle="tab"]').on('shown', function(e){
-          //save the latest tab using a cookie:
-          $.cookie('last_tab', $(e.target).attr('href'));
-        });
-       
-        //activate latest tab, if it exists:
-        var lastTab = $.cookie('last_tab');
-        if (lastTab) {
-            $('ul.nav-tabs').children().removeClass('active');
-            $('a[href='+ lastTab +']').parents('li:first').addClass('active');
-            $('div.tab-content').children().removeClass('active');
-            $(lastTab).addClass('active');
-        }
+      $('input[id=lefile]').change(function(){
+        $('#photoCover').val($(this).val());
       });
     </script>
+    
   </body>
 </html>

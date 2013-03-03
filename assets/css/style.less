@@ -4,7 +4,54 @@
   background-color: #444444;
  }
 
+
+/* =============================================================================
+   General
+   ========================================================================== */
+
+
+
+
 .right { float: right; }
+#lefile {
+  display: none;
+}
+
+.thumbnail {
+  padding: 10px 10px;
+}
+
+/* =============================================================================
+   Modal
+   ========================================================================== */
+div.modal {
+  
+  div.modal-header {
+    h3 { color: #105287; }
+  }
+
+  div.modal-body {
+    table td:last-child {
+      width: 300px;
+    }
+    img {
+      width: 215px;
+      height: 230px;
+    }
+    p {
+      margin: 0 15px;
+      font-style: italic;
+      font-size: 14px;
+    }
+    h4 { 
+      margin: 0 15px;
+      color: #105287;
+
+      span { color: #CC0000; }
+    }
+  }
+}
+
 
 /* =============================================================================
    Login
@@ -159,6 +206,11 @@
    Content
    ========================================================================== */
 
+.alert {
+  padding: 0 35px 10px 14px;
+}
+
+
 .span10 {
   margin-left: 0;
   width: 1130px;
@@ -174,7 +226,7 @@
 
   .breadcrumb {
     background-color: #EAEAEA;
-    font-size: 12px;
+    font-size: 13px;
 
     a {
       color: #5C5C5C;
@@ -185,7 +237,14 @@
 
 .content-main {
   font-size: 12px;
-
+  height: 100%;
+  
+    ul.product-thumbnails {
+      li img {
+        width: 215px;
+        height: 160px;
+      }
+    }
 
     ul.nav-tabs li.active a {
       background-color: #f5f5f5;
@@ -267,12 +326,38 @@
         padding: 12px 0px 10px 0px;
       }
     }
+
+    div.upload-controls {
+      padding: 10px 50px;
+    }
   }
   
 }
 
 
+/* =============================================================================
+   Sticky Footer
+   ========================================================================== */
+
+// * {
+//   margin: 0;
+// }
+
+// html, body {
+//   height: 100%;
+// }
+
+// .wrapper {
+//   min-height: 100%;
+//   height: auto !important;
+//   height: 100%;
+//   margin: 0 auto -6em;
+// }
+
+// .footer, .push {
+//   height: 4em;
+// }
 
 footer {
-  color: #FFF;
+  color: #DBDBDB;
 }
