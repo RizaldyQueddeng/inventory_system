@@ -5,6 +5,31 @@
   if (!$session->is_logged_in()) {
     redirect_to("index.php");
   }
+
+  // 1. the current page number ($current_page)
+  $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+
+  // 2. records per page ($per_page)
+  $per_page = 8;
+
+  // 3. total record count ($total_count)
+  $total_count = Inventory::count_all();
+
+  // Use pagination to find images
+  $pagination = new Pagination($page, $per_page, $total_count);
+
+  // Instead of finding all records, just find the records for this page
+
+  $query = "SELECT products.product_id, products.product, products.price, products.product_description, product_image.filename ";
+  $query .= "FROM products LEFT JOIN product_image ";
+  $query .= "ON products.product_id=product_image.product_id ";
+  $query .= "LIMIT {$per_page} ";
+  $query .= "OFFSET {$pagination->offset()}";
+  $products = Inventory::find_by_sql($query);
+
+  // Need to add ?page=$page to all links we want to
+  // maintain the current page (or store $page in $session)
+
  ?>
 
 <?php include_once('includes/header.php'); ?>
@@ -64,44 +89,31 @@
 
           <div class="row-fluid content-main">
           
+            <?php output_message($message); ?>
+            
             <?php 
-              if (isset($_GET['message'])) {
-                $message = $_GET['message'];
-              }
-              if (!empty($message)) {
-                $alert_message = "<div class='alert alert-error'><br>";
-                $alert_message .= "<button class='close' data-dismiss='alert'>&times;</button>";
-                $alert_message .= "{$message}";
-                $alert_message .= "</div>";
-
-                echo $alert_message;
-              } 
-             ?>
-
-             <?php 
               $table_name = "products";
-              $item = Inventory::inventory_join_image();
               $i = 1;
 
-              foreach ($item as $field) {
+              foreach ($products as $product) {
 
                 if ($i == 1) {
                   echo "<ul class='thumbnails product-thumbnails'>";
                 }
 
-                $product_img = Upload::find_by_product_id($field->product_id);
+                $product_img = Upload::find_by_product_id($product->product_id);
 
                 echo "<li class='span3'>";
                 echo "<div class='thumbnail'>";
                 if ($product_img) {
-                  echo "<a href='#" .$field->product_id. "' role='button' data-toggle='modal' data-toggle='tooltip' class='tooltip_dialog' data-placement='left' title='View Details'><img src='assets/img/". $field->filename ."' /></a>";
+                  echo "<a href='#" .$product->product_id. "' role='button' data-toggle='modal' data-toggle='tooltip' class='tooltip_dialog' data-placement='left' title='View Details'><img src='assets/img/". $product->filename ."' /></a>";
                 } else {
-                  echo "<a href='#" .$field->product_id. "' role='button' data-toggle='modal' data-toggle='tooltip' class='tooltip_dialog' data-placement='left' title='View Details'><img src='holder.js/215x160' /></a>";
+                  echo "<a href='#" .$product->product_id. "' role='button' data-toggle='modal' data-toggle='tooltip' class='tooltip_dialog' data-placement='left' title='View Details'><img src='holder.js/215x160' /></a>";
                 }
                 
-                echo "<h4><center>". $field->product ."</center></h4>";
+                echo "<h4><center>". $product->product ."</center></h4>";
                 echo "<center><div class='btn-group'>";
-                echo "<a href='product_upload.php?id=". $field->product_id ."' class='btn btn-success tooltip_dialog' data-toggle='tooltip' data-placement='bottom' title='Upload an Image to Product'>Upload Image</a>";
+                echo "<a href='product_upload.php?id=". $product->product_id ."' class='btn btn-success tooltip_dialog' data-toggle='tooltip' data-placement='bottom' title='Upload an Image to Product'>Upload Image</a>";
                 echo "</div></center>";
                 echo "</div>";
                 echo "</li>";
@@ -114,31 +126,59 @@
                 }
               }
 
-              if ($i < 3) { echo "</ul>"; }
-
+              echo "</ul>";
+              // if ($i < 4) { echo "</ul>"; }
             ?>
 
-            <?php foreach($item as $field): ?>
+            <div class="pagination pagination-right">
+              <ul>
+                <?php 
+                  if ($pagination->total_pages() > 1) {
+                    
+                    if ($pagination->has_previous_page()) {
+                      echo "<li><a href=\"products.php?page=";
+                      echo $pagination->previous_page();
+                      echo "\">Previous</a></li>";
+                    }
+
+                    for ($i=1; $i <= $pagination->total_pages(); $i++) { 
+                      if ($i == $page) {
+                        echo "<li class='active'><span>{$i}</span></li>";
+                      } else {
+                        echo "<li><a href=\"products.php?page={$i}\">{$i}</a></li>";
+                      }
+                    }
+
+                    if ($pagination->has_next_page()) {
+                      echo "<li><a href=\"products.php?page=";
+                      echo $pagination->next_page();
+                      echo "\">Next</a></li>";
+                    }
+                  }
+                 ?>
+              </ul>
+            </div>
+
+            <?php foreach($products as $product): ?>
               
-              <div id="<?php echo $field->product_id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="productName" aria-hidden="true">
+              <div id="<?php echo $product->product_id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="productName" aria-hidden="true">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                  <h3 id ="productName"><?php echo $field->product; ?></h3>
+                  <h3 id ="productName"><?php echo $product->product; ?></h3>
                 </div>
+
                 <div class="modal-body">
                   <table>
                     <tr>
-                      <td><div class="thumbnail"><img src="assets/img/<?php echo $field->filename; ?>"></div></td>
+                      <td><div class="thumbnail"><img src="assets/img/<?php echo $product->filename; ?>"></div></td>
                       <td>
-                        <p>"<?php echo $field->product_description ?>"</p><br>
-                        <h4>Price: <span>Php <?php echo formatMoney($field->price, true); ?></span></h4>
+                        <p>"<?php echo $product->product_description ?>"</p><br>
+                        <h4>Price: <span>Php <?php echo formatMoney($product->price); ?></span></h4>
                       </td>
                     </tr>
                   </table>
-                  
-                  
-
                 </div>
+
                 <div class="modal-footer">
                   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                 </div>

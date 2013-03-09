@@ -1,6 +1,5 @@
    
     <footer class="footer">
-      <hr>
       <div class="container-fluid">
         <p>&copy; DPoint Technologies Asia <?php echo date("Y", time()); ?></p>
       </div>

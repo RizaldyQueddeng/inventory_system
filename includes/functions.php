@@ -17,7 +17,12 @@
 
   function output_message($message = "") {
     if (!empty($message)) {
-      return "<p>{$message}</p>";
+      $alert_message = "<div class='alert alert-error'><br>";
+      $alert_message .= "<button class='close' data-dismiss='alert'>&times;</button>";
+      $alert_message .= "{$message}";
+      $alert_message .= "</div>";
+
+      echo $alert_message;
     } else {
       return "";
     }
@@ -47,5 +52,7 @@
     } 
     return $number; 
   } 
+
+
 
  ?>

@@ -46,13 +46,12 @@
 
                 $product->units_purchase = $product->quantity_left;
                 $product->purchase_date = date("Y-m-d");
-                $message = $product->save();
-
-                $product_name = "";
-                $product_description = "";
-                $price = "";
-                $quantity = "";
-
+                if ($product->save()) {
+                  $session->message("Product added successfully.");
+                  redirect_to("add_product.php");
+                } else {
+                  $message = "Product was not saved!";
+                }
               }
             }
           }
@@ -125,17 +124,8 @@
 
             <div class="row-fluid content-main">
 
-              <?php 
-                if (!empty($message)) {
-                  $alert_message = "<div class='alert alert-error'><br>";
-                  $alert_message .= "<button class='close' data-dismiss='alert'>&times;</button>";
-                  $alert_message .= "{$message}";
-                  $alert_message .= "</div>";
-
-                  echo $alert_message;
-                } 
-               ?>
-
+              <?php output_message($message); ?>
+              
               <ul class="nav nav-tabs">
                 <li><a href="home.php">Inventory</a></li>
                 <li class="active"><a href="add_product.php">Add Product</a></li>

@@ -67,6 +67,15 @@
       return $object_array;
     }
 
+    public static function count_all() {
+      global $database;
+
+      $query = "SELECT COUNT(*) FROM ". self::$table_name;
+      $result_set = $database->query($query);
+      $row = $database->fetch_array($result_set);
+      return array_shift($row);
+    }
+
     private static function instantiate($record) {
       // Could check that $record exists and is an array
       // Simple long form approach

@@ -65,6 +65,15 @@
       return $object_array;
     }
 
+    public static function count_all() {
+      global $database;
+
+      $query = "SELECT COUNT(*) FROM ". self::$products_table_name;
+      $result_set = $database->query($query);
+      $row = $database->fetch_array($result_set);
+      return array_shift($row);
+    }
+
     private static function instantiate($record) {
       // Could check that $record exists and is an array
       // Simple long form approach
@@ -97,6 +106,8 @@
       // Will return true of false
       return array_key_exists($attribute, $object_vars);
     }
+
+
 
 
     // Class Methods
@@ -227,10 +238,10 @@
       if ($database->query($query2)) {
         $this->id = $database->insert_id();
         mysql_query("COMMIT");
-        return $message = "Product added succesfully.";
-
+        return true;
       } else {
         mysql_query("ROLLBACK");
+        return false;
       }
 
       // if ($database->query($query1)) {
@@ -278,10 +289,10 @@
       if ($database->query($query2)) {
         mysql_query("COMMIT");
         $this->product_id = "";
-        return $message = "Add item to product run succesfully.";
-
+        return true;
       } else {
         mysql_query("ROLLBACK");
+        return false;
       }
     }
 
@@ -320,10 +331,11 @@
           $database->query($query3);
           mysql_query("COMMIT");
           $this->product_id = "";
-          return $message = "Add item sold run succesfully.";
+          return true;
 
         } else {
           mysql_query("ROLLBACK");
+          return false;
         }
       }
     }
@@ -397,7 +409,10 @@
 
         if ($database->query($query1) && $database->query($query2)) {
           mysql_query("COMMIT");
-          return $message = "Record Deleted.";
+          return true;
+        } else {
+          mysql_query("ROLLBACK");
+          return false;
         }
       }
     }

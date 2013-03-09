@@ -8,8 +8,12 @@
 
   $record = new Inventory();
   $record->product_id = $id;
-  $message = $record->delete();
+  if ($record->delete()) {
+    $session->message("Record succesfully deleted.");
+    redirect_to("home.php");
+  } else {
+    $session->message("Record was not deleted!");
+  }
 
-  header("location: home.php?message=$message")
 
  ?>

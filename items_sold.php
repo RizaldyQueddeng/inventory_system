@@ -23,7 +23,12 @@
           $sales->units_sold = $units_sold;
           $sales->sales_date = date("Y-m-d");
           $sales->sales = $units_sold;
-          $message = $sales->items_sold();
+          if ($sales->items_sold()) {
+            $session->message("Orders added successfully.");
+            redirect_to("items_sold.php");
+          } else {
+            $message = "Add Orders failed!";
+          }
 
           $units_sold = "";
         }
@@ -91,17 +96,8 @@
 
           <div class="row-fluid content-main">
 
-            <?php 
-              if (!empty($message)) {
-                $alert_message = "<div class='alert alert-error'><br>";
-                $alert_message .= "<button class='close' data-dismiss='alert'>&times;</button>";
-                $alert_message .= "{$message}";
-                $alert_message .= "</div>";
-
-                echo $alert_message;
-              } 
-             ?>
-
+            <?php output_message($message); ?>
+            
             <ul class="nav nav-tabs">
               <li><a href="home.php">Inventory</a></li>
               <li><a href="add_product.php">Add Product</a></li>

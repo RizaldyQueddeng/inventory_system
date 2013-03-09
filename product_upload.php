@@ -13,15 +13,15 @@
                               //   102400 = 100kb
                               //  1048576 = 1mb
                               // 10485760 = 10mb
-    $message = "";
+    
     if (isset($_POST['submit'])) {
       $image = new Upload();
       $image->product_id = $id;
       $image->attach_file($_FILES['file_upload']);
       if ($image->save()) {
         // Success
-        $message = "Image uploaded succesfully.";
-        redirect_to("products.php?message=". $message ."");
+        $session->message("Image uploaded succesfully.");
+        redirect_to("products.php");
       } else {
         // Failure
         $message = join("<br />", $image->errors);
@@ -94,16 +94,7 @@
             </ul>
           </div> <!-- end of content-header -->
 
-          <?php 
-            if (!empty($message)) {
-              $alert_message = "<div class='alert alert-error'><br>";
-              $alert_message .= "<button class='close' data-dismiss='alert'>&times;</button>";
-              $alert_message .= "{$message}";
-              $alert_message .= "</div>";
-
-              echo $alert_message;
-            } 
-           ?>
+          <?php output_message($message); ?>
 
           <div class="row-fluid content-main">
           

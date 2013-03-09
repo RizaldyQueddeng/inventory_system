@@ -42,21 +42,13 @@
 
     <div class="container">
 
-      <h3>Inventory System</h3>
+      <h3>Dpoint Inventory System</h3>
       <br>
 
       <form action="index.php" method="post" class="form-signin">
         <p class='form-signin-heading'>Sigin in with username and password to continue</p>
-        <?php 
-          if (!empty($message)) {
-            $alert_message = "<div id='errorMessage' class='alert alert-success alert-error' data-alert='alert'><br>";
-            $alert_message .= "<a class='close' data-dismiss='alert' href='#'>x</a>";
-            $alert_message .= "<p class='error-message form-signin-heading'>". $message ."</p>";
-            $alert_message .= "</div>";
 
-            echo $alert_message;
-          } 
-         ?>
+        <?php output_message($message); ?>
 
         <div class="input-prepend">
           <span class="add-on">
@@ -88,5 +80,4 @@
   </body>
 </html>
 
-<?php include_once('includes/footer.php'); ?>
 <?php if(isset($database)) { $database->close_connection(); } ?>

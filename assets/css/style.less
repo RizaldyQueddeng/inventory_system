@@ -5,6 +5,7 @@
  }
 
 
+
 /* =============================================================================
    General
    ========================================================================== */
@@ -58,26 +59,17 @@ div.modal {
    ========================================================================== */
 
  body#login {
-  padding-top: 20px;
-  padding-bottom: 40px;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#555555), to(#111111));
-  background-image: -webkit-linear-gradient(top, #555555 0%, #111111 100%);
-  background-image: -moz-linear-gradient(top, #555555 0%, #111111 100%);
-  background-image: -ms-linear-gradient(top, #555555 0%, #111111 100%);
-  background-image: -o-linear-gradient(top, #555555 0%, #111111 100%);
-  background-image: linear-gradient(top, #555555 0%, #111111 100%);
-  margin: 0;
 
   h3 {
     color: #D8D8D8;
     text-align: center;
     font-weight: normal;
+    margin-top: 50px;
   }
 }
 
 .form-signin {
-  max-width: 300px;
+  max-width: 350px;
   padding: 19px 29px 29px;
   margin: 0 auto 20px;
   background-color: #fff;
@@ -92,24 +84,24 @@ div.modal {
 
   .form-signin-heading {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 20px;
   }
 
+  .input-prepend {
+    text-align: center;
+    margin: 0 26px;
+  }
+
   input[type="text"], input[type="password"] {
-    font-size: 13px;
+    font-size: 14px;
     height: auto;
-    margin: 0 auto;
     margin-bottom: 10px;
   }
 
   input[type="submit"] {
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 230px;
-  }
-
-  .input-prepend {
-    margin: 0 26px;
   }
 
   .checkbox {
@@ -210,10 +202,11 @@ div.modal {
   padding: 0 35px 10px 14px;
 }
 
-
 .span10 {
   margin-left: 0;
   width: 1130px;
+  height: 770px;
+  overflow: hidden;
   background-color: #f5f5f5;
   padding: 20px 20px 0;
   border-top: 5px solid #DFDFDF;
@@ -359,5 +352,11 @@ div.modal {
 // }
 
 footer {
+  margin-top: 8px;
+  border-top: 2px solid #6C6C6C;
   color: #DBDBDB;
+
+  p {
+    margin-top: 10px;
+  }
 }
