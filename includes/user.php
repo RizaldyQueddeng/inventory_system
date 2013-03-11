@@ -7,13 +7,18 @@
 	class User extends DatabaseObject {
 
     protected static $table_name = "users";
-    protected static $db_fields = array('id', 'username', 'password', 'first_name', 'last_name', 'gender', 'contact_number');
+    protected static $db_fields = array(
+      'id', 'username', 'password', 'email', 'first_name', 'last_name', 'address', 'age', 'gender', 'contact_number'
+      );
 
     public $id;
     public $username;
     public $password;
+    public $email;
     public $first_name;
     public $last_name;
+    public $address;
+    public $age;
     public $gender;
     public $contact_number;
 
@@ -43,6 +48,26 @@
     }
 		
     // Common database object
+    public static function count_all() {
+      global $database;
+
+      $query = "SELECT COUNT(*) FROM ". self::$table_name;
+      $result_set = $database->query($query);
+      $row = $database->fetch_array($result_set);
+      return array_shift($row);
+    }
+
+    public static function count_search($keyword) {
+      global $database;
+
+      $query = "SELECT COUNT(*) FROM " .self::$table_name;
+      $query .= " WHERE first_name LIKE '%" .$keyword. "%' "; 
+      $query .= "OR last_name LIKE '%" .$keyword. "%'";
+      $result_set = $database->query($query);
+      $row = $database->fetch_array($result_set);
+      return array_shift($row);
+    }
+
     public static function find_all() {
       global $database;
 
@@ -65,15 +90,6 @@
         $object_array[] = self::instantiate($row);
       }
       return $object_array;
-    }
-
-    public static function count_all() {
-      global $database;
-
-      $query = "SELECT COUNT(*) FROM ". self::$table_name;
-      $result_set = $database->query($query);
-      $row = $database->fetch_array($result_set);
-      return array_shift($row);
     }
 
     private static function instantiate($record) {

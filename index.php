@@ -11,16 +11,18 @@
   if (isset($_POST['submit'])) {
     
     $username = trim($_POST['username']);
-    $password = trim(md5($_POST['password']));
+    $password = $_POST['password'];
+    $hashed_password = hash("sha512", $password);
 
     if (!strlen($username) || !strlen($password)) {
       $message = "Both fields are required!";
     } else {
        // Check database if username and password exist
-      $found_user = User::authenticate($username, $password);
+      $found_user = User::authenticate($username, $hashed_password);
       
       if ($found_user) {
         $session->login($found_user);
+        $_SESSION['first_name'] = $found_user->first_name;
         redirect_to("home.php");
       } else {
         // username and password combination doesn't exist in database
@@ -36,7 +38,7 @@
 
 
 
-<?php include_once('includes/header.php'); ?>
+<?php include_once('includes/layouts/index_header.php'); ?>
 
   <body id="login">
 

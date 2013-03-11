@@ -4,16 +4,22 @@
 
 <?php 
     
-  $id = $_GET['id'];
-
-  $record = new Inventory();
-  $record->product_id = $id;
-  if ($record->delete()) {
-    $session->message("Record succesfully deleted.");
+  if (!isset($_GET['id'])) {
     redirect_to("home.php");
   } else {
-    $session->message("Record was not deleted!");
+    $id = $_GET['id'];
+
+    $record = new Inventory();
+    $record->product_id = $id;
+    if ($record->delete()) {
+      $session->message("Record succesfully deleted.");
+      redirect_to("home.php");
+    } else {
+      $session->message("Record was not deleted!");
+    }
   }
+
+  
 
 
  ?>

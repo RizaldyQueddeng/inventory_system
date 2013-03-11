@@ -74,6 +74,16 @@
       return array_shift($row);
     }
 
+    public static function count_search($keyword) {
+      global $database;
+
+      $query = "SELECT COUNT(*) FROM " .self::$products_table_name;
+      $query .= " WHERE product LIKE '%" .$keyword. "%'"; 
+      $result_set = $database->query($query);
+      $row = $database->fetch_array($result_set);
+      return array_shift($row);
+    }
+
     private static function instantiate($record) {
       // Could check that $record exists and is an array
       // Simple long form approach
