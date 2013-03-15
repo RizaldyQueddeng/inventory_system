@@ -7,6 +7,7 @@
   require_once('includes/inventory.php');
 
 
+  include_once('includes/layouts/header.php');
 
   $user = User::find_by_id(1);
   echo $user->full_name() . "<br />";
@@ -55,9 +56,37 @@
   // echo "<br />";
 
 
-  if (isset($_POST{'submit'})) {
-    echo $_POST['product_id'];
-  }
+  $sql = "SELECT id, product_id, SUM(units_sold) AS units_sold, sales_date, SUM(sales) AS sales ";
+  $sql .= " FROM sales ";
+  $sql .= " GROUP BY sales_date";
 
+  $sales = Inventory::find_by_sql($sql);
 
  ?>
+
+  <table class="table table-striped table-bordered table-hover inventory-table">
+    <thead class="btn-success">
+      <th>date</th>
+      <th>Sales Order</th>
+      <th>Sales</th>
+      <th>Actions</th>
+    </thead>
+    <tbody>
+      <?php 
+        foreach ($sales as $product_sales) {
+          echo "<tr><td>"; 
+          echo $product_sales->sales_date;
+          echo "</td><td>";
+          echo $product_sales->units_sold;
+          echo "</td><td>";
+          echo formatMoney($product_sales->sales, true);
+          echo "</td><td>";
+          echo "<a href='delete_product.php?id=". $product_sales->product_id ."' class='btn tooltip_dialog' data-toggle='tooltip' data-placement='left' title='Delete Record' onclick='return confirmAction()'><i class='icon-trash'></i></a>";
+          echo "</td></tr>";
+        }
+
+       ?>
+    </tbody>
+  </table>
+
+ <?php include_once('includes/layouts/footer.php'); ?>

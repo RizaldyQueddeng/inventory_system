@@ -37,7 +37,8 @@
   } else {
 
     // 3. total record count ($total_count)
-    $total_count = Inventory::count_all();
+    $table_name = "products";
+    $total_count = Inventory::count_all($table_name);
 
     // Use pagination to find images
     $pagination = new Pagination($page, $per_page, $total_count);
@@ -63,8 +64,8 @@
             <li><a href="home.php"><i class="icon-home icon-white"></i>&nbsp;&nbsp;Home</a></li>
             <li class="active"><a href="inventory.php"><i class="icon-list icon-white"></i>&nbsp;&nbsp;Inventory</a></li>
             <li><a href="products.php"><i class="icon-barcode icon-white"></i>&nbsp;&nbsp;Products</a></li>
-            <li><a href="#"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
-            <li><a href="#"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Orders</a></li>
+            <li><a href="sales.php"><i class="icon-tag icon-white"></i>&nbsp;&nbsp;Sales</a></li>
+            <li><a href="purchase_order.php"><i class="icon-shopping-cart icon-white"></i>&nbsp;&nbsp;Purchase Order</a></li>
             <li><a href="admin_users.php"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Users</a></li>
           </ul>
         </div><!--/.well -->
@@ -95,7 +96,7 @@
              </div>
 
              <div class="span3">
-               <form action="home.php" method="post" class="form-search list">
+               <form action="inventory.php" method="post" class="form-search list">
                 <div class="input-append">
                   <input type="text" name="keyword" class="input-medium search-query">
                   <input type="submit" name="submit" class="btn btn-primary" value="Search">
@@ -135,7 +136,7 @@
                   echo "</td><td>";
                   echo formatMoney($product->sales, true);
                   echo "</td><td>";
-                  echo "<a href='delete.php?id=". $product->product_id ."' class='btn tooltip_dialog' data-toggle='tooltip' data-placement='left' title='Delete Record' onclick='return confirmAction()'><i class='icon-trash'></i></a>";
+                  echo "<a href='delete_product.php?id=". $product->product_id ."' class='btn tooltip_dialog' data-toggle='tooltip' data-placement='left' title='Delete Record' onclick='return confirmAction()'><i class='icon-trash'></i></a>";
                   echo "</td></tr>";
                 }
                 

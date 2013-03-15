@@ -38,7 +38,7 @@
       </li>
       <li class="span3">
         <div class="thumbnail">
-          <a href="#"><img src="assets/img/sales.jpg" alt="sales"></a>
+          <a href="sales.php"><img src="assets/img/sales.jpg" alt="sales"></a>
           <h2>Sales</h2>
           <p>Get realtime statistics on sales from range of months and dates</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
@@ -46,7 +46,7 @@
       </li>
       <li class="span3">
         <div class="thumbnail">
-          <a href="#"><img src="assets/img/purchase.png" alt="purchase"></a>
+          <a href="purchase_order.php"><img src="assets/img/purchase.png" alt="purchase"></a>
           <h2>Purchase</h2>
           <p>Monitor Purchased products via statistical graph</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>

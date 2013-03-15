@@ -9,23 +9,11 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/holder.js"></script>
-    <script type="text/javascript" language="javascript">
-      function confirmAction()
-      {
-        var confirmed = confirm("Are you sure? This will remove the record forever.");
-        return confirmed;
-      }
-
-      $(function(){
-        $('.tooltip_dialog').tooltip();
-      });
-
-      $('input[id=lefile]').change(function(){
-        $('#photoCover').val($(this).val());
-      });
-    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- highcharts.js -->
+    <script src="assets/js/highcharts.js"></script>
+    <script src="assets/js/scripts.js"></script>
     
   </body>
 </html>

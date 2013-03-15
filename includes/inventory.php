@@ -65,16 +65,16 @@
       return $object_array;
     }
 
-    public static function count_all() {
+    public static function count_all($table_name) {
       global $database;
 
-      $query = "SELECT COUNT(*) FROM ". self::$products_table_name;
+      $query = "SELECT COUNT(*) FROM ". $table_name;
       $result_set = $database->query($query);
       $row = $database->fetch_array($result_set);
       return array_shift($row);
     }
 
-    public static function count_search($keyword) {
+    public static function count_search($keyword, $table_name) {
       global $database;
 
       $query = "SELECT COUNT(*) FROM " .self::$products_table_name;

@@ -172,20 +172,37 @@
       }
     }
 
-    public function update() {
+    // public function update() {
+    //   global $database;
+    //   // Dont forget your SQL syntax and good habits
+    //   // - UPDATE table SET key='value', key='value' WHERE condition
+    //   // - single-quotes around all values
+    //   // - escape all values to prevent SQL injection
+    //   $attributes = $this->sanitized_attributes();
+    //   $attribute_pairs = array();
+    //   foreach ($attributes as $key => $value) {
+    //     $attribute_pairs[] = "{$key}='{$value}'";
+    //   }
+    //   $sql = "UPDATE ". self::$table_name ." SET ";
+    //   $sql .= join(", ", $attribute_pairs); 
+    //   $sql .= " WHERE id=". $database->escape_value($this->id);
+    //   $database->query($sql);
+    //   return ($database->affected_rows() == 1) ? true : false;
+    // }
+
+    public function update_userinfo() {
       global $database;
-      // Dont forget your SQL syntax and good habits
-      // - UPDATE table SET key='value', key='value' WHERE condition
-      // - single-quotes around all values
-      // - escape all values to prevent SQL injection
-      $attributes = $this->sanitized_attributes();
-      $attribute_pairs = array();
-      foreach ($attributes as $key => $value) {
-        $attribute_pairs[] = "{$key}='{$value}'";
-      }
+
       $sql = "UPDATE ". self::$table_name ." SET ";
-      $sql .= join(", ", $attribute_pairs); 
-      $sql .= " WHERE id=". $database->escape_value($this->id);
+      $sql .= "first_name='" .$database->escape_value($this->first_name). "', ";
+      $sql .= "last_name='" .$database->escape_value($this->last_name). "', ";
+      $sql .= "address='" .$database->escape_value($this->address). "', ";
+      $sql .= "age='" .$database->escape_value($this->age). "', ";
+      $sql .= "gender='" .$database->escape_value($this->gender). "', ";
+      $sql .= "contact_number='" .$database->escape_value($this->contact_number). "', ";
+      $sql .= "username='" .$database->escape_value($this->username). "', ";
+      $sql .= "email='" .$database->escape_value($this->email). "' ";
+      $sql .= "WHERE id=". $database->escape_value($this->id);
       $database->query($sql);
       return ($database->affected_rows() == 1) ? true : false;
     }

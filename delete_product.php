@@ -5,7 +5,7 @@
 <?php 
     
   if (!isset($_GET['id'])) {
-    redirect_to("home.php");
+    redirect_to("inventory.php");
   } else {
     $id = $_GET['id'];
 
