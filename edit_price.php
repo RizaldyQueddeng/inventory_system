@@ -7,12 +7,32 @@
   }
 
   if (isset($_POST['submit'])) {
-      
+    $product_id = $_POST['product_id'];
+    $updated_price = $_POST['updated_price'];
+
+    // Check for required field
+    if (!strlen($product_id) || !strlen($updated_price)) {
+      $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp; All fields are required.";
+    } else {
+      // Check if is numeric
+      if (!is_numeric($updated_price)) {
+        $message = "<strong>Add Product Failed!</strong>&nbsp;&nbsp;&nbsp; Units purchase must be integer.";
+      } else {
+        $product_price = new Inventory();
+        $product_price->product_id = $product_id;
+        $product_price->updated_price = $updated_price;
+        $product_price->upprice_date = date("Y-m-d");
+        if ($product_price->update_price()) {
+          $session->message("Price successfully updated.");
+          redirect_to("edit_price.php");
+        } else {
+          $message = "Purchase error!";
+        }
+      }
+    }
   } else {
-    $product_name = "";
-    $product_description = "";
-    $price = "";
-    $quantity = "";
+    $product_id = "";
+    $updated_price = "";
   }
  ?>
 
@@ -37,7 +57,7 @@
         <div class="row-fluid content-header">
           <h1>Inventory</h1>
           <ul class="breadcrumb">
-            <li><a href="#">Home</a> <span class="divider">/</span></li>
+            <li><a href="home.php">Home</a> <span class="divider">/</span></li>
             <li><a href="#">Inventory</a></li>
           </ul>
         </div> <!-- end of content-header -->
@@ -59,7 +79,7 @@
               <h5><i class="icon-pencil"></i><span class="break"></span> Edit Price</h5>
             </div>
 
-            <form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
+            <form action="edit_price.php" method="post" accept-charset="utf-8" class="form-horizontal">
 
               <div class="control-group">
                 <label class="control-label" for="productName">Product Name</label>
@@ -79,7 +99,7 @@
               <div class="control-group">
                 <label class="control-label" for="price">Price</label>
                 <div class="controls">
-                  <input type="text" id="price" placeholder="price" name="price">
+                  <input type="text" name="updated_price" id="price" placeholder="price" name="price">
                 </div>
               </div>
 

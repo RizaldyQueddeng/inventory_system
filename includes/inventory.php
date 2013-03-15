@@ -10,10 +10,12 @@
     protected static $products_table_name = "products"; 
     protected static $purchase_table_name = "purchase"; 
     protected static $sales_table_name = "sales"; 
+    protected static $upprice_table_name = "product_price";
 
     protected static $products_fields = array('product_id','product', 'quantity_left', 'quantity_sold', 'price', 'sales', 'product_description', 'product_date');
     protected static $purchase_fields = array('product_id', 'units_purchase', 'purchase_date');
     protected static $sales_fields = array('product_id', 'units_sold', 'sales_date', 'sales');
+    protected static $upprice_fields = array('product_id', 'updated_price', 'upprice_date');
 
     public $id;
 
@@ -34,6 +36,10 @@
     // Sales table fields
     public $units_sold;
     public $sales_date;
+
+    // Product Price update fields
+    public $updated_price;
+    public $upprice_date;
 
     // for product image
     public $filename;
@@ -77,7 +83,7 @@
     public static function count_search($keyword, $table_name) {
       global $database;
 
-      $query = "SELECT COUNT(*) FROM " .self::$products_table_name;
+      $query = "SELECT COUNT(*) FROM " . $table_name;
       $query .= " WHERE product LIKE '%" .$keyword. "%'"; 
       $result_set = $database->query($query);
       $row = $database->fetch_array($result_set);
@@ -138,6 +144,9 @@
         $attributes = $this->attributes(self::$sales_fields);
         return $attributes;
 
+      } elseif ($tb_name == self::$upprice_table_name) {
+        $attributes = $this->attributes(self::$upprice_fields);
+        return $attributes;
       }
     }
 
@@ -276,8 +285,6 @@
       mysql_query("SET AUTOCOMMIT=0");
       mysql_query("START TRANSACTION");
 
-      $sales = Inventory::find_by_product_id($this->product_id, self::$sales_table_name);
-
       $attributes = $this->sanitized_attributes(self::$purchase_table_name);
       $query1 = "INSERT INTO ". self::$purchase_table_name ." (";
       $query1 .= join(", ", array_keys($attributes));
@@ -294,6 +301,43 @@
       $attributes = $this->sanitized_attributes(self::$products_table_name);
       $query2 = "UPDATE ". self::$products_table_name ." SET ";
       $query2 .= "quantity_left = " .$product->quantity_left. " + ".$this->units_purchase." "; 
+      $query2 .= "WHERE product_id=". $attributes['product_id'];
+
+      if ($database->query($query2)) {
+        mysql_query("COMMIT");
+        $this->product_id = "";
+        return true;
+      } else {
+        mysql_query("ROLLBACK");
+        return false;
+      }
+    }
+
+    public function update_price() {
+      global $database;
+      // Don't forget your SQL syntax and good habits:
+      // - INSERT INTO table (key, key) VALUES ('value','value')
+      // - single-quotes around all values
+      // - escape all values to prevent sql injection
+
+      // MYSQL Transactions
+      mysql_query("SET AUTOCOMMIT=0");
+      mysql_query("START TRANSACTION");
+
+      $attributes = $this->sanitized_attributes(self::$upprice_table_name);
+      $query1 = "INSERT INTO ". self::$upprice_table_name ." (";
+      $query1 .= join(", ", array_keys($attributes));
+      $query1 .= ") VALUES ('";
+      $query1 .= join("', '", array_values($attributes));
+      $query1 .= "')";
+      
+      if ($database->query($query1)) {
+        $this->id = $database->insert_id();
+      } 
+
+      $attributes = $this->sanitized_attributes(self::$products_table_name);
+      $query2 = "UPDATE ". self::$products_table_name ." SET ";
+      $query2 .= "price = " .$this->updated_price. " "; 
       $query2 .= "WHERE product_id=". $attributes['product_id'];
 
       if ($database->query($query2)) {

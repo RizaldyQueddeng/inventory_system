@@ -13,13 +13,16 @@
   // 2. records per page ($per_page)
   $per_page = 10;
 
+  // table name
+  $table_name = 'products';
+
   
   if (isset($_POST['submit'])) {
 
     $keyword = $_POST['keyword'];
 
     // 3. total record count ($total_count)
-    $total_count = Inventory::count_search($keyword);
+    $total_count = Inventory::count_search($keyword, $table_name);
 
     // Use pagination to find images
     $pagination = new Pagination($page, $per_page, $total_count);
